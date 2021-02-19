@@ -18,6 +18,6 @@ from django.urls import include, path
 from django.conf.urls import url
 
 urlpatterns = [
-    path('managecmcsite/', admin.site.urls),
-    path('', include('predictMethods.urls'), name='index'),
+    path('admin/', admin.site.urls),
+    path('', include('predictMethods.urls')),
 ]
