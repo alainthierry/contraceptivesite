@@ -1,0 +1,65 @@
+/*  stylesheet */
+
+body {
+  font-family: serif;
+}
+
+/* Form part */
+.form-data-predict {
+  background-color: #FFFF;
+  box-shadow: 0px 0px 1px 0px;
+  border-radius: 3px;
+  padding: 7px;
+  margin-bottom: 1px;
+
+}
+.form-data-login {
+  background-color: #FFFF;
+  box-shadow: 0px 0px 1px 0px;
+  border-radius: 3px;
+  padding: 7px;
+  margin-bottom: 1px;
+
+}
+/* Predict part page */
+.predict_result {
+  background-color: #FFFF;
+  box-shadow: 0px 0px 1px 0px;
+  border-radius: 3px;
+  padding: 27px;
+  margin-bottom: 1px;
+  margin: 10px;
+  margin-bottom: 0px;
+}
+
+/* Footer part */
+.card {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+/* About part */
+.dataset_rsc:hover{
+  color: black;
+  text-decoration: none;
+}
+
+.text-justify {
+  font-size: 1rem;
+  font-family: serif;
+}
+
+@media all and (max-width: 786px) {
+	.card {
+	  margin-right: -14px;
+	  margin-left: -14px;
+	}
+  #var_importance_plot {
+    width: 517px;
+    margin:auto;
+  }
+  #var_importance_pie {
+    width: 517px;
+    margin:auto;
+  }
+}
