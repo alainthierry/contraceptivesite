@@ -26,7 +26,7 @@ SECRET_KEY = 'w#82=t6@^*xmed(flr(+(xoyr_z8fh7olrt5rfv!2twk8j$w^y'
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
