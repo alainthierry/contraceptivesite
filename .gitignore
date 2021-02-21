@@ -1,7 +1,7 @@
 predictMethods/dumps
 db.sqlite3
 
-contraceptivesite/__pycache__/*
-contraceptivesite/predictMethods/__pycache__/*
-contraceptivesite/predictMethods/migrations/__pycache__/*
+contraceptivesite/__pycache__/
+predictMethods/__pycache__/
+predictMethods/migrations/__pycache__/
 __pycache__
