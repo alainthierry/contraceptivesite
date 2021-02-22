@@ -1,11 +1,13 @@
 {% extends 'predictMethods/base.html' %}
 
+{% load i18n %}
+
 {% block content_404 %}
 
 <div class="container">
   <div class="row w-50 mx-auto">
-    <p><em>I'm lost. I'm like a king without a throne.</em>
-      You're trying to access a nonexistent resources !
+    <p><em>{% trans " I'm lost. I'm like a king without a throne. " %}</em>
+      {% trans "You're trying to access a nonexistent resources !" %}
     </p>
   </div>
 </div>

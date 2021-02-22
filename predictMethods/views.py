@@ -7,17 +7,19 @@ from .models import User, UserData
 import numpy as np
 import joblib
 
+from django.utils.translation import gettext as _
+
 def index(request):
     context = {
-        'title': 'Predict Contraceptive Method Choice',
-        'page_title': 'Let\'s predict your Contraceptive Method Choice',
+        'title': _('Predict Contraceptive Method Choice'),
+        'page_title': _('Let\'s predict your Contraceptive Method Choice'),
     }
-    return render(request, 'predictMethods/form.html', context)
+    return render(request, _('predictMethods/en/form.html'), context)
 
 def user_login(request):
     context = {
-        'title' : 'CMC login',
-        'page_title': 'Check Prediction',
+        'title' : _('CMC login'),
+        'page_title': _('Check Prediction')
     }
     if request.method == 'GET':
         form = UserLogin(request.GET or None)
@@ -30,8 +32,8 @@ def user_login(request):
                 user=User.objects.get(pseudonym=user_pseudo_exist).id
             )
             if not (User.objects.filter(pseudonym=user_pseudo_exist).exists() and user_age_exist.exists()):
-                context['message'] = " Sorry, you did not make any prediction before !"
-                return render(request, 'predictMethods/login.html', context)
+                context['message'] = _(" Sorry, you did not make any prediction before !")
+                return render(request, _('predictMethods/en/login.html'), context)
             else:
                 """ Everything is OK """
 
@@ -40,22 +42,20 @@ def user_login(request):
                 context['predict_result'] = user.predict_result
                 context['predict_proba'] = user.predict_proba
                 context['pseudonym'] = user.pseudonym
-                context['title']  = pseudonym + " prediction"
-                context['page_title'] = pseudonym + " 's prediction"
+                context['title']  = pseudonym + _(" prediction")
+                context['page_title'] = _("prediction of ")+pseudonym
 
-                return render(request, 'predictMethods/login.html', context)
+                return render(request, _('predictMethods/en/login.html'), context)
 
-    return render(request, 'predictMethods/login.html', context)
-
+    return render(request, _('predictMethods/en/login.html'), context)
 
 
 def about_cmc(request):
     context = {
-        'title': 'About CMC',
-        'page_title': 'About CMC',
+        'title': _('About CMC'),
+        'page_title': _('About CMC'),
     }
-    return render(request, 'predictMethods/about.html', context)
-
+    return render(request, _('predictMethods/en/about.html'), context)
 
 def get_sent_data(request):
     context = {}
@@ -82,9 +82,10 @@ def get_sent_data(request):
             """ Make prediction on data """
             context['predict_result'] = int(rfcl_model.predict(new_user_data))
             context['predict_proba'] = round( rfcl_model.predict_proba(new_user_data).max(), 3)
-            context['page_title'] = 'Predicted method for '+pseudonym
+            context['page_title'] = _('Predicted method for ') + pseudonym
             context['pseudonym'] = pseudonym
-            context['title'] = 'Predicted method for '+pseudonym
+            context['title'] = _("Predicted method for ") + pseudonym
+
             try:
                 with transaction.atomic():
                     user = User.objects.filter(pseudonym=pseudonym)
@@ -105,7 +106,7 @@ def get_sent_data(request):
                         	husband_occupation = husband_occupation,
                         	user = user,
                         )
-                        return render(request, 'predictMethods/predict_result.html', context)
+                        return render(request, _('predictMethods/en/predict_result.html'), context)
                     else:
                         """ The user exists in the database """
                         user = user.first()
@@ -118,14 +119,12 @@ def get_sent_data(request):
                             """ New user_age value """
 
                             if (context['predict_result']==previous_predict) and (previous_proba > context['predict_proba']):
-                                context['message'] = """ We're sorry, your data are still the same as the
-                                    previous prediction you made on this website !
-                                """
+                                context['message'] = _("We're sorry, your data are still the same as the previous prediction you made on this website !")
                                 context['predict_result'] = user.predict_result
                                 context['predict_proba'] = user.predict_proba
-                                context['page_title'] = 'Your new prediction is worse than your previous one !'
-                                context['title'] = 'Prediction not allowed'
-                                return render(request, 'predictMethods/predict_result.html', context)
+                                context['page_title'] = _('Your new prediction is worse than your previous one !')
+                                context['title'] = _('Prediction not allowed')
+                                return render(request, _('predictMethods/en/predict_result.html'), context)
 
                             elif (context['predict_result']==previous_predict) and (previous_proba < context['predict_proba']):
                                 """ Update proba and delete the previous data """
@@ -142,17 +141,15 @@ def get_sent_data(request):
 
                                 user.save()
                                 user_data.save()
-                                return render(request, 'predictMethods/predict_result.html', context)
+                                return render(request, _('predictMethods/en/predict_result.html'), context)
                             else:
                                 if (context['predict_result'] !=previous_predict) and (previous_proba > context['predict_proba']):
-                                    context['message'] = """ We're sorry, your data are still the same as the
-                                        previous prediction you made on this website !
-                                    """
+                                    context['message'] = _("We're sorry, your data are still the same as the previous prediction you made on this website !")
                                     context['predict_result'] = user.predict_result
                                     context['predict_proba'] = user.predict_proba
-                                    context['page_title'] = 'Your new prediction is worse than your previous one !'
-                                    context['title'] = 'Prediction not allowed'
-                                    return render(request, 'predictMethods/predict_result.html', context)
+                                    context['page_title'] = _('Your new prediction is worse than your previous one !')
+                                    context['title'] = _('Prediction not allowed')
+                                    return render(request, _('predictMethods/en/predict_result.html'), context)
 
                                 elif (context['predict_result'] !=previous_predict) and (previous_proba < context['predict_proba']):
                                     """ Update proba and delete the previous data """
@@ -170,34 +167,30 @@ def get_sent_data(request):
 
                                     user.save()
                                     user_data.save()
-                                    return render(request, 'predictMethods/predict_result.html', context)
+                                    return render(request, _('predictMethods/en/predict_result.html'), context)
                                 else:
-                                    context['message'] = """ We're sorry, your data are still the same as the
-                                    previous prediction you made on this website.
-                                    """
+                                    context['message'] = _("We're sorry, your data are still the same as the previous prediction you made on this website.")
                                     context['predict_result'] = user.predict_result
                                     context['predict_proba'] = user.predict_proba
-                                    context['title'] = 'Prediction not allowed'
-                                    context['page_title'] = 'Your data did not change since your last prediction !'
-                                    return render(request, 'predictMethods/predict_result.html', context)
+                                    context['title'] = _('Prediction not allowed')
+                                    context['page_title'] = _('Your data did not change since your last prediction !')
+                                    return render(request, _('predictMethods/en/predict_result.html'), context)
                         else:
                             """ No new prediction allowed, age did not change """
 
-                            context['message'] = """ We're sorry, your data are still the same as the
-                            previous prediction you made on this website.
-                            """
+                            context['message'] = _(" We're sorry, your data are still the same as the previous prediction you made on this website.")
                             context['predict_result'] = user.predict_result
                             context['predict_proba'] = user.predict_proba
-                            context['title'] = 'Prediction not allowed'
-                            context['page_title'] = 'Your data did not change since your last prediction !'
-                            return render(request, 'predictMethods/predict_result.html', context)
+                            context['title'] = _('Prediction not allowed')
+                            context['page_title'] = _('Your data did not change since your last prediction !')
+                            return render(request, _('predictMethods/en/predict_result.html'), context)
             except IntegrityError:
-                form.errors['internal'] = " An error occured ! Thank you to try again later !"
+                form.errors['internal'] = _(" An error occurred ! Thank you to try again later ! ")
         else:
             context = {}
-            context['title'] = 'Predict Contraceptive Method'
-            context['page_title'] = 'Let\'s predict your Contraceptive Method'
-            return render(request, 'predictMethods/form.html', context)
+            context['title'] = _('Predict Contraceptive Method')
+            context['page_title'] = _('Let\'s predict your Contraceptive Method')
+            return render(request, _('predictMethods/en/form.html'), context)
     else:
         pass
-    return render(request, 'predictMethods/form.html', context)
+    return render(request, _('predictMethods/en/form.html'), context)
