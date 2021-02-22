@@ -1,0 +1,47 @@
+{% extends 'predictMethods/base.html' %}
+
+{% load i18n %}
+
+{% block user_login %}
+
+<p>Cette page vous permet de vérifier et d'afficher vos prédictions faites sur ce site Web.<strong> Merci d'avoir participé à cette aventure !</strong></p>
+<form method="GET" action="{% url 'predictMethods:login' %}" class="form-data-login">
+  {% csrf_token %}
+
+  <div class="form-group">
+    <label for="pseudonym">Pseudonyme</label>
+    <input type="text" name="pseudonym" placeholder="Votre pseudonyme" class="form-control" id="pseudonym" required>
+  </div>
+  <div class="form-group">
+    <label for="user_age">Âge</label>
+    <input type="number" name="user_age" placeholder="Votre âge" class="form-control" id="user_age" min="16" max="102" required>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="text-center mx-auto btn btn-primary" style="width: 167px;">Vérifier</button>
+  </div>
+
+</form>
+{% if message %}
+  <p>
+    <strong>{{message}}</strong>&nbsp;&nbsp;<a href="{% url 'predictMethods:home' %}">Make one</a>
+  </p>
+{% endif %}
+
+{% if found %}
+  <em>
+  <strong>{{pseudonym}}</strong>
+  {% if predict_result == 1 %}
+  , vous n'utilisez aucune méthode contraceptive avec une probabilité de {{predict_proba}} ou vous ne l'utiliserez pas avec une probabilité de {{predict_proba}}
+  {% endif %}
+
+  {% if predict_result == 2 %}
+  , vous utilisez une méthode contraceptive à long terme (plus de 10 ans) avec une probabilité de {{predict_proba}} ou vous l'utiliserez avec une probabilité de {{predict_proba}}
+  {% endif %}
+
+  {% if predict_result == 3 %}
+  , vous utilisez une méthode contraceptive à court terme (moins d'un an) avec une probabilité de {{predict_proba}} ou vous l'utiliserez avec une probabilité de {{predict_proba}}
+  {% endif %}
+  !</em></br>Notez qu'une nouvelle prédiction n'est autorisée que lorsque votre âge augmente !
+
+{% endif %}
+{% endblock %}

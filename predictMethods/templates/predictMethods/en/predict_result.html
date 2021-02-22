@@ -1,0 +1,33 @@
+{% extends 'predictMethods/base.html' %}
+
+{% load i18n %}
+
+{% block predict_result %}
+
+<div class="container w-80 mx-auto predict_result">
+  <strong>{{pseudonym}}
+	{% if predict_result == 1 %}
+	, you don't use any contraceptive method with a probability of {{predict_proba}} or you'll
+  not use it with a probability of {{predict_proba}} according to the prediction model of this website.
+	{% endif %}
+
+	{% if predict_result == 2 %}
+	, you use a contraceptive method for long-term (more than 10 years) with a probability of
+  {{predict_proba}} or you'll use it with a probability of {{predict_proba}}
+  according to the prediction model of this website.
+	{% endif %}
+
+	{% if predict_result == 3 %}
+	, you use a contraceptive method for short-term (less than a year) with a probability of
+  {{predict_proba}} or you'll use it with a probability of {{predict_proba}}
+  according to the prediction model of this website.
+	{% endif %}
+  </strong>
+  <p><em>{{message}}</em></p>
+  <strong>The prediction model used here has a prediction accuracy of 70% and 9% as test error rate.</strong>
+  <p>
+    <a class="nav-link float-lg-right" href="{% url 'predictMethods:login' %}">Check prediction</a>
+  </p>
+</div>
+
+{% endblock  %}

@@ -1,0 +1,77 @@
+{% extends 'predictMethods/base.html' %}
+
+{% load i18n %}
+
+{% block form %}
+
+<form method="POST" action="{% url 'predictMethods:predict' %}" class="form-data-predict">
+  {% csrf_token %}
+
+  <div class="form-group">
+    <input type="number" name="user_age" placeholder="Your age" class="form-control" id="user_age" min="16" max="102" required>
+  </div>
+
+  <div class="form-group">
+    <input type="text" name="pseudonym" placeholder="Pseudonym" class="form-control" id="pseudonym" required>
+  </div>
+
+  <div class="form-group">
+    <select class="form-control" name="user_education" id="user_education" required>
+      <<option value="0">Your education level</option>
+      <option value="1">LOW</option>
+      <option value="2">MEDIUM</option>
+      <option value="3">HIGH</option>
+      <option value="4">VERY_HIGH</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <select class="form-control" name="husband_education" id="husband_education" required>
+      <<option value="0">Your husband education level</option>
+      <option value="1">LOW</option>
+      <option value="2">MEDIUM</option>
+      <option value="3">HIGH</option>
+      <option value="4">VERY_HIGH</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <input type="number" class="form-control" placeholder="Number children ever born" id="number_children" name="number_children_ever_born" min="0" max="10" required>
+  </div>
+
+  <div class="form-group">
+      <div class="form-check form-check-inline">
+        <label class="form-check-label" for="user_education">Your religion</label>&nbsp;&nbsp;
+        <input class="form-check-input" type="radio" name="user_religion" id="user_religion1" value="0">
+        <label class="form-check-label" for="user_religion1">NONE_ISLAM</label>&nbsp;&nbsp;
+        <input class="form-check-input" type="radio" name="user_religion" id="user_religion2" value="1">
+        <label class="form-check-label" for="user_religion2">ISLAM</label>
+      </div>
+  </div>
+
+  <div class="form-group">
+    <div class="form-check form-check-inline">
+      <label class="form-check-label">You're working now ?</label>&nbsp;&nbsp;
+      <input class="form-check-input" type="radio" name="user_working" id="user_working1" value="0">
+      <label class="form-check-label" for="user_working1">YES</label>&nbsp;&nbsp;
+      <input class="form-check-input" type="radio" name="user_working" id="user_working2" value="1">
+      <label class="form-check-label" for="user_working2">NO</label>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <select class="form-control" id="husband_occupation" name="husband_occupation" required>
+      <<option value="0">Your husband occupation status</option>
+      <option value="1">LOW</option>
+      <option value="2">MEDIUM</option>
+      <option value="3">HIGH</option>
+      <option value="4">VERY_HIGH</option>
+    </select>
+  </div>
+
+  <div class="form-group ">
+    <button type="submit" class="mx-auto btn btn-secondary" style="width: 137px;">Predict</button>
+  </div>
+</form>
+
+{% endblock %}
