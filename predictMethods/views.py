@@ -9,6 +9,10 @@ import joblib
 
 from django.utils.translation import gettext as _
 
+from django.core.mail import send_mail
+from django.conf import settings
+
+
 def index(request):
     context = {
         'title': _('Predict Contraceptive Method Choice'),
@@ -106,6 +110,16 @@ def get_sent_data(request):
                         	husband_occupation = husband_occupation,
                         	user = user,
                         )
+                        """subject = 'A NEW PREDICTION HAS BEEN MADE !'
+                        message = ""
+                            This is to notify you that a new prediction has been made !
+                            The project is continuing receiving new users !
+                        ""
+                        email_from = settings.EMAIL_HOST_USER
+                        recipient_list = ['cobayeleamire@gmail.com',]
+                        if send_mail( subject, message, email_from, recipient_list ):
+                            return render(request, _('predictMethods/en/predict_result.html'), context)
+                        else:"""
                         return render(request, _('predictMethods/en/predict_result.html'), context)
                     else:
                         """ The user exists in the database """

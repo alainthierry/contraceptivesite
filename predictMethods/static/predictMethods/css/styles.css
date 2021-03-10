@@ -1,7 +1,8 @@
 /*  stylesheet */
 
-body, *{
+body {
   font-family: serif;
+  font-size: 1.02em;
 }
 
 /* Form part */
@@ -44,22 +45,25 @@ body, *{
   text-decoration: none;
 }
 
-.text-justify {
-  font-size: 1rem;
-  font-family: serif;
-}
-
-@media all and (max-width: 786px) {
-	.card {
-	  margin-right: -14px;
-	  margin-left: -14px;
-	}
-  #var_importance_plot {
-    width: 517px;
-    margin:auto;
+@media all and (orientation: portrait) {
+  .card {
+    margin-right: -14px;
+    margin-left: -14px;
   }
-  #var_importance_pie {
-    width: 517px;
+  #var_importance_plot {
+    width: 300px;
     margin:auto;
+    object-fit: fill;
+    display: none;
+  }
+
+  #var_importance_pie {
+    width: 300px;
+    margin:auto;
+    object-fit: fill;
+    display: none;
+  } 
+  #carousel-slide {
+    display: none;
   }
 }
